@@ -1,13 +1,18 @@
 import requests
 from datetime import datetime
+import pandas as pd
+import numpy as np 
+import matplotlib.pyplot as plt
 current_date_only = datetime.today().date().strftime("%d-%m-%Y")
+name=input("your city name= ").capitalize()
 response=requests.get('https://api.openweathermap.org/data/2.5/weather?q=Kathmandu&appid=c007f3fc3a422083d719d41a4a511272')
-weathertoday = response.json()
-print(weathertoday)
-weather_data = {
-    "Temperature": weathertoday["main"]["temp"],
+weathertoday= response.json()
+weather_data= {
+    "Temperature": weathertoday["main"]["temp"]-273,
     "Humidity": weathertoday["main"]["humidity"],
     "Weather Description": weathertoday["weather"][0]["description"],
     "City": weathertoday["name"]
 }
-print(weather_data)
+weather=[weather_data]
+weather_kathmandu=pd.DataFrame(weather)
+print(weather_kathmandu.head())
